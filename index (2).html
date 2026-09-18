@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyCoach - Class 8-10 Peer Resources, Flea Market & StudyCoachAi</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            900: '#312e81',
+                        },
+                        accent: {
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            purple: '#8b5cf6',
+                            rose: '#f43f5e'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+        }
+        .dark .glass-nav {
+            background: rgba(15, 23, 42, 0.92);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo & Brand Title -->
+                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('flea')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-accent-purple to-indigo-700 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
+                        <i class="fa-solid fa-graduation-cap text-xl font-bold"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-brand-600 via-accent-purple to-indigo-600 bg-clip-text text-transparent tracking-tight">StudyCoach</span>
+                        <span class="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 ml-2">Class 8–10 Hub</span>
+                    </div>
+                </div>
+
+                <!-- Global City & Grade Controls -->
+                <div class="hidden md:flex items-center gap-3 bg-slate-100 dark:bg-slate-800/90 p-1.5 rounded-xl border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center gap-1.5 px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                        <i class="fa-solid fa-location-dot text-accent-rose"></i>
+                        <span>City:</span>
+                    </div>
+                    <select id="globalCitySelect" onchange="handleCityChange(this.value)" class="bg-white dark:bg-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg border-0 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-brand-500 outline-none cursor-pointer">
+                        <option value="Pune" selected>📍 Pune</option>
+                        <option value="Bangalore">📍 Bangalore</option>
+                        <option value="Chennai">📍 Chennai</option>
+                    </select>
+
+                    <div class="w-px h-4 bg-slate-300 dark:bg-slate-700"></div>
+
+                    <div class="flex items-center gap-1.5 px-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                        <i class="fa-solid fa-layer-group text-brand-500"></i>
+                        <span>Grade:</span>
+                    </div>
+                    <select id="globalGradeSelect" onchange="handleGradeChange(this.value)" class="bg-white dark:bg-slate-900 text-xs font-bold px-3 py-1.5 rounded-lg border-0 ring-1 ring-slate-200 dark:ring-slate-700 focus:ring-2 focus:ring-brand-500 outline-none cursor-pointer">
+                        <option value="all">All Classes (8-10)</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="10">Class 10</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                        <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                        <i class="fa-solid fa-sun text-lg hidden dark:block text-amber-400"></i>
+                    </button>
+                    
+                    <button onclick="openModal('addListingModal')" class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-md shadow-brand-500/20 transition-all">
+                        <i class="fa-solid fa-plus"></i>
+                        <span>Sell / Share Material</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation Tabs Bar -->
+    <nav class="bg-white dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700/80 sticky top-16 z-30 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between overflow-x-auto custom-scrollbar gap-2 py-2">
+                <div class="flex items-center gap-1 sm:gap-2 min-w-max">
+                    <button onclick="switchTab('flea')" id="tab-btn-flea" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-300 transition-all">
+                        <i class="fa-solid fa-store"></i>
+                        <span>Second-Hand Flea Market</span>
+                        <span id="fleaBadge" class="ml-1 px-1.5 py-0.5 text-[10px] bg-brand-200 dark:bg-brand-800 text-brand-800 dark:text-brand-200 rounded-full">12 Items</span>
+                    </button>
+
+                    <button onclick="switchTab('notes')" id="tab-btn-notes" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span>E-Notes & PDFs</span>
+                    </button>
+
+                    <button onclick="switchTab('hackathons')" id="tab-btn-hackathons" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
+                        <i class="fa-solid fa-laptop-code text-accent-purple"></i>
+                        <span>Nearby Hackathons & Fairs</span>
+                        <span class="px-1.5 py-0.5 text-[10px] bg-accent-purple/20 text-accent-purple rounded-full font-extrabold">Pune/BLR/MAA</span>
+                    </button>
+
+                    <!-- Dedicated AI Section Tab -->
+                    <button onclick="switchTab('ai')" id="tab-btn-ai" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all border border-brand-500/30">
+                        <i class="fa-solid fa-wand-magic-sparkles text-amber-500 animate-pulse"></i>
+                        <span class="bg-gradient-to-r from-brand-600 to-accent-purple bg-clip-text text-transparent font-extrabold">StudyCoachAi</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+        <!-- SECTION 1: Flea Market -->
+        <section id="section-flea" class="tab-content space-y-6">
+            <!-- Header Banner -->
+            <div class="bg-gradient-to-r from-brand-700 via-indigo-700 to-purple-800 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="relative z-10 space-y-1">
+                    <span class="px-2.5 py-1 rounded-full bg-white/20 text-[11px] font-bold uppercase tracking-wider">Peer-to-Peer Campus Marketplace</span>
+                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Class 8-10 Flea Market</h1>
+                    <p class="text-slate-200 text-xs sm:text-sm max-w-xl">Buy and sell pre-loved textbooks, RS Aggarwal/RD Sharma guides, geometry sets, and lab coats from students in your city.</p>
+                </div>
+                <div class="flex items-center gap-2 z-10">
+                    <span class="text-xs bg-black/30 px-3 py-1.5 rounded-xl border border-white/10 font-semibold" id="fleaCityTag">📍 Showing items near Pune</span>
+                </div>
+            </div>
+
+            <!-- Filters & Search -->
+            <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
+                <div class="relative w-full sm:w-80">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
+                    <input type="text" id="fleaSearch" onkeyup="filterFleaItems()" placeholder="Search books, lab coats, geometry kits..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
+                </div>
+                <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
+                    <button onclick="filterFleaCategory('all')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-600 text-white whitespace-nowrap">All Items</button>
+                    <button onclick="filterFleaCategory('Books')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Textbooks</button>
+                    <button onclick="filterFleaCategory('Equipment')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Lab & Geometry</button>
+                    <button onclick="filterFleaCategory('Notes')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Handwritten Notes</button>
+                </div>
+            </div>
+
+            <!-- Flea Market Grid -->
+            <div id="fleaMarketGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+                <!-- Javascript will dynamically inject items here -->
+            </div>
+        </section>
+
+        <!-- SECTION 2: E-Notes & PDFs -->
+        <section id="section-notes" class="tab-content hidden space-y-6">
+            <div class="bg-slate-800 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <span class="px-2.5 py-1 rounded-full bg-brand-500/30 text-brand-300 text-[11px] font-bold uppercase tracking-wider">Free Educational Vault</span>
+                    <h2 class="text-2xl font-extrabold mt-1">E-Notes, PDFs & PYQ Question Banks</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1">Download topper notes, formula sheets, and solved previous year papers for Class 8, 9 & 10 (CBSE/ICSE).</p>
+                </div>
+                <button onclick="switchTab('ai')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg hover:brightness-110 transition-all">
+                    <i class="fa-solid fa-sparkles"></i>
+                    <span>Summarize Notes with StudyCoachAi</span>
+                </button>
+            </div>
+
+            <!-- Notes Cards Grid -->
+            <div id="notesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Injected via Javascript -->
+            </div>
+        </section>
+
+        <!-- SECTION 3: Hackathons & Fairs -->
+        <section id="section-hackathons" class="tab-content hidden space-y-6">
+            <div class="bg-gradient-to-r from-accent-purple via-indigo-800 to-slate-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="px-2 py-0.5 rounded bg-accent-purple/40 text-xs font-bold">Class 8-10 Competitions</span>
+                        <span class="text-xs text-slate-300" id="hackathonCityHeader">📍 City: Pune</span>
+                    </div>
+                    <h2 class="text-2xl font-extrabold mt-1">School Hackathons & Science Fairs</h2>
+                    <p class="text-slate-300 text-xs sm:text-sm mt-1">Discover upcoming STEM challenges, robotics competitions, and coding hackathons in Pune, Bangalore & Chennai.</p>
+                </div>
+            </div>
+
+            <!-- Hackathons Grid -->
+            <div id="hackathonsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Injected via Javascript -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: StudyCoachAi (DEDICATED SECTION) -->
+        <section id="section-ai" class="tab-content hidden space-y-4">
+            
+            <!-- Information Bar for AI Section -->
+            <div class="flex items-center justify-between px-4 py-2.5 bg-gradient-to-r from-brand-900 to-indigo-950 text-white rounded-xl text-xs">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-amber-400"></i>
+                    <span class="font-bold">StudyCoachAi Workspace</span>
+                    <span class="text-slate-400 hidden sm:inline">| AI Assistant for Class 8–10 Homework & Concepts</span>
+                </div>
+                <span class="bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full text-[10px] font-bold">Active Connection</span>
+            </div>
+
+            <!-- CLEAN IFRAME WORKSPACE CONTAINER -->
+            <!-- 
+            
+            -->
+            <div class="w-full h-[calc(100vh-180px)] min-h-[600px] bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-md overflow-hidden relative">
+                <iframe 
+                    src="$$ YOUR_AI_HOMEPAGE_URL_HERE $$" 
+                    class="w-full h-full border-0" 
+                    title="StudyCoachAi"
+                    allow="microphone; camera; clipboard-write; autoplay; encrypted-media; fullscreen"
+                    loading="lazy">
+                </iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Modal: Item Detail / Contact Seller -->
+    <div id="itemModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
+            <button onclick="closeModal('itemModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div id="itemModalContent">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Add New Flea Market Item -->
+    <div id="addListingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
+            <button onclick="closeModal('addListingModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-lg font-bold text-slate-900 dark:text-white">List an Item on Flea Market</h3>
+            <form onsubmit="handleNewListing(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-bold mb-1">Item Title</label>
+                    <input type="text" id="newTitle" required placeholder="e.g. Class 10 NCERT Science Exemplar" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-bold mb-1">Target Class</label>
+                        <select id="newGrade" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                            <option value="8">Class 8</option>
+                            <option value="9">Class 9</option>
+                            <option value="10">Class 10</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-bold mb-1">Price (₹)</label>
+                        <input type="number" id="newPrice" required placeholder="e.g. 150" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">City</label>
+                    <select id="newCity" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                        <option value="Pune">Pune</option>
+                        <option value="Bangalore">Bangalore</option>
+                        <option value="Chennai">Chennai</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block font-bold mb-1">Condition</label>
+                    <input type="text" id="newCondition" placeholder="e.g. Barely Used, No Highlights" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
+                </div>
+                <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md shadow-brand-500/30 transition-all">Publish Listing</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data State
+        let currentCity = 'Pune';
+        let currentGrade = 'all';
+        let currentCategory = 'all';
+
+        // Sample Data for Flea Market
+        const fleaItems = [
+            { id: 1, title: 'Class 10 NCERT Science & Math Exemplar', price: 180, originalPrice: 450, city: 'Pune', grade: '10', category: 'Books', condition: 'Like New', location: 'Kothrud, Pune', seller: 'Aarav M. (Class 10)', icon: 'fa-book', imageBg: 'bg-indigo-100 text-indigo-600' },
+            { id: 2, title: 'Class 9 RS Aggarwal Mathematics', price: 150, originalPrice: 380, city: 'Pune', grade: '9', category: 'Books', condition: 'Minimal Pencil Notes', location: 'Viman Nagar, Pune', seller: 'Riya K. (Class 10)', icon: 'fa-book-open', imageBg: 'bg-emerald-100 text-emerald-600' },
+            { id: 3, title: 'Standard Geometry Kit & Drawing Board', price: 200, originalPrice: 600, city: 'Bangalore', grade: '8', category: 'Equipment', condition: 'Good', location: 'Indiranagar, Bangalore', seller: 'Karthik S. (Class 9)', icon: 'fa-compass', imageBg: 'bg-amber-100 text-amber-600' },
+            { id: 4, title: 'Class 10 CBSE Board Past 10 Yr Papers', price: 220, originalPrice: 520, city: 'Bangalore', grade: '10', category: 'Books', condition: 'Annotated', location: 'Koramangala, Bangalore', seller: 'Ananya V. (Class 10)', icon: 'fa-file-signature', imageBg: 'bg-rose-100 text-rose-600' },
+            { id: 5, title: 'Science Lab Coat & Safety Goggles (M)', price: 120, originalPrice: 350, city: 'Chennai', grade: '9', category: 'Equipment', condition: 'Washed, Great Condition', location: 'Adyar, Chennai', seller: 'Siddharth R. (Class 10)', icon: 'fa-flask', imageBg: 'bg-purple-100 text-purple-600' },
+            { id: 6, title: 'Class 8 ICSE Physics & Chemistry Guide', price: 130, originalPrice: 320, city: 'Chennai', grade: '8', category: 'Books', condition: 'Like New', location: 'Anna Nagar, Chennai', seller: 'Priya N. (Class 9)', icon: 'fa-atom', imageBg: 'bg-sky-100 text-sky-600' },
+            { id: 7, title: 'Handwritten Topper Notes - Class 10 Biology', price: 90, originalPrice: 200, city: 'Pune', grade: '10', category: 'Notes', condition: 'Spiral Bound', location: 'Aundh, Pune', seller: 'Dev P. (Class 10)', icon: 'fa-notes-medical', imageBg: 'bg-teal-100 text-teal-600' },
+            { id: 8, title: 'Class 9 Olympiad Workbooks (Math & NSO)', price: 160, originalPrice: 400, city: 'Bangalore', grade: '9', category: 'Books', condition: 'Unsolved Exercises', location: 'Whitefield, Bangalore', seller: 'Varun T. (Class 10)', icon: 'fa-trophy', imageBg: 'bg-amber-100 text-amber-600' }
+        ];
+
+        // Sample Data for Notes
+        const notesItems = [
+            { id: 101, title: 'Class 10 Chemistry: Carbon & Its Compounds Revision', grade: '10', subject: 'Science', pages: '12 Pages', downloads: '1.2k', fileType: 'PDF' },
+            { id: 102, title: 'Class 9 Physics: Laws of Motion & Gravitation Formulas', grade: '9', subject: 'Physics', pages: '8 Pages', downloads: '890', fileType: 'PDF' },
+            { id: 103, title: 'Class 8 Mathematics: Linear Equations Mind Maps', grade: '8', subject: 'Maths', pages: '5 Pages', downloads: '640', fileType: 'PDF' },
+            { id: 104, title: 'Class 10 CBSE Maths Formula Cheat Sheet', grade: '10', subject: 'Maths', pages: '10 Pages', downloads: '2.4k', fileType: 'PDF' },
+            { id: 105, title: 'Class 9 Biology: Cell Unit of Life Diagram Handbook', grade: '9', subject: 'Biology', pages: '15 Pages', downloads: '1.1k', fileType: 'PDF' },
+            { id: 106, title: 'Class 8 Grammar & Comprehension Rules', grade: '8', subject: 'English', pages: '9 Pages', downloads: '510', fileType: 'PDF' }
+        ];
+
+        // Sample Data for Hackathons & Fairs
+        const hackathonsData = [
+            { id: 201, title: 'Pune Junior STEM Innovation Fair 2026', city: 'Pune', grade: 'Classes 8-10', date: 'Oct 14-15, 2026', venue: 'COEP Technological University, Pune', tag: 'Robotics & Science', prize: '₹25,000 Grants' },
+            { id: 202, title: 'Bangalore Young Coders Hackathon', city: 'Bangalore', grade: 'Classes 8-10', date: 'Nov 02, 2026', venue: 'Koramangala Innovation Hub, BLR', tag: 'Coding & AI', prize: 'Laptops & Trophies' },
+            { id: 203, title: 'Chennai Middle School Tech Expo', city: 'Chennai', grade: 'Classes 8-10', date: 'Oct 28, 2026', venue: 'IIT Madras Research Park, Chennai', tag: 'Eco Tech', prize: '₹30,000 Cash' },
+            { id: 204, title: 'Pune Inter-School Math & Logic League', city: 'Pune', grade: 'Classes 8-9', date: 'Nov 12, 2026', venue: 'Fergusson College Campus, Pune', tag: 'Mathematics', prize: 'Medals & Certificates' }
+        ];
+
+        // Render Flea Market
+        function renderFleaMarket() {
+            const grid = document.getElementById('fleaMarketGrid');
+            document.getElementById('fleaCityTag').innerText = `📍 Showing items near ${currentCity}`;
+            
+            const filtered = fleaItems.filter(item => {
+                const matchCity = item.city === currentCity;
+                const matchGrade = currentGrade === 'all' || item.grade === currentGrade;
+                const matchCat = currentCategory === 'all' || item.category === currentCategory;
+                return matchCity && matchGrade && matchCat;
+            });
+
+            document.getElementById('fleaBadge').innerText = `${filtered.length} Items`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+                        <i class="fa-solid fa-box-open text-4xl text-slate-400 mb-3"></i>
+                        <p class="font-bold text-slate-600 dark:text-slate-300">No second-hand items found for ${currentCity} (Grade ${currentGrade}).</p>
+                        <p class="text-xs text-slate-400 mt-1">Be the first student to list a book or equipment!</p>
+                        <button onclick="openModal('addListingModal')" class="mt-4 px-4 py-2 bg-brand-600 text-white rounded-xl text-xs font-bold">List Item Now</button>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(item => `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700/80 shadow-xs hover:shadow-md transition-all flex flex-col justify-between group">
+                    <div>
+                        <div class="w-full h-36 ${item.imageBg} rounded-xl flex items-center justify-center relative mb-3">
+                            <i class="fa-solid ${item.icon} text-5xl opacity-80 group-hover:scale-110 transition-transform"></i>
+                            <span class="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-md bg-white/90 dark:bg-slate-900/90 text-[10px] font-extrabold text-slate-700 dark:text-slate-300 shadow-xs">
+                                Class ${item.grade}
+                            </span>
+                            <span class="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-md bg-emerald-500 text-white text-[10px] font-bold">
+                                ${item.condition}
+                            </span>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white line-clamp-2">${item.title}</h3>
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-1"><i class="fa-solid fa-location-dot text-rose-500 mr-1"></i>${item.location}</p>
+                    </div>
+
+                    <div class="pt-3 mt-3 border-t border-slate-100 dark:border-slate-700/50 flex items-center justify-between">
+                        <div>
+                            <span class="text-base font-extrabold text-brand-600 dark:text-brand-400">₹${item.price}</span>
+                            <span class="text-[10px] text-slate-400 line-through ml-1">₹${item.originalPrice}</span>
+                        </div>
+                        <button onclick="openItemDetails(${item.id})" class="px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-700 hover:bg-brand-600 hover:text-white text-slate-700 dark:text-slate-200 text-xs font-bold transition-colors">
+                            Contact
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Notes
+        function renderNotes() {
+            const grid = document.getElementById('notesGrid');
+            const filtered = notesItems.filter(note => currentGrade === 'all' || note.grade === currentGrade);
+
+            grid.innerHTML = filtered.map(note => `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/80 shadow-xs hover:border-brand-500/50 transition-all flex flex-col justify-between space-y-4">
+                    <div>
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 text-[10px] font-bold">Class ${note.grade} • ${note.subject}</span>
+                            <span class="text-[10px] text-slate-400"><i class="fa-solid fa-file-pdf text-red-500 mr-1"></i>${note.fileType}</span>
+                        </div>
+                        <h3 class="font-bold text-sm text-slate-900 dark:text-white">${note.title}</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${note.pages} • ${note.downloads} Student Downloads</p>
+                    </div>
+                    <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
+                        <button onclick="downloadNote('${note.title}')" class="flex-1 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
+                            <i class="fa-solid fa-download"></i> Download
+                        </button>
+                        <button onclick="switchTab('ai')" title="Open in StudyCoachAi" class="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white text-xs font-bold transition-all">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Hackathons
+        function renderHackathons() {
+            const grid = document.getElementById('hackathonsGrid');
+            document.getElementById('hackathonCityHeader').innerText = `📍 City: ${currentCity}`;
+            
+            const filtered = hackathonsData.filter(h => h.city === currentCity);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+                        <p class="font-bold text-slate-600 dark:text-slate-300">No upcoming competitions listed for ${currentCity} right now.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(h => `
+                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="px-2.5 py-0.5 rounded-full bg-accent-purple/10 text-accent-purple text-[10px] font-extrabold">${h.tag}</span>
+                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">${h.prize}</span>
+                    </div>
+                    <h3 class="font-bold text-base text-slate-900 dark:text-white">${h.title}</h3>
+                    <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
+                        <p><i class="fa-solid fa-calendar text-brand-500 mr-1.5"></i>${h.date}</p>
+                        <p><i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i>${h.venue}</p>
+                    </div>
+                    <button onclick="alert('Registration details for ${h.title} sent!')" class="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-slate-700 text-white text-xs font-bold hover:bg-brand-600 transition-colors">
+                        View Details & Register
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
+                btn.classList.add('text-slate-600', 'dark:text-slate-400');
+            });
+
+            document.getElementById(`section-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            activeBtn.classList.add('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
+            
+            if (tabId === 'flea') renderFleaMarket();
+            if (tabId === 'notes') renderNotes();
+            if (tabId === 'hackathons') renderHackathons();
+        }
+
+        // Global Handlers
+        function handleCityChange(city) {
+            currentCity = city;
+            renderFleaMarket();
+            renderHackathons();
+        }
+
+        function handleGradeChange(grade) {
+            currentGrade = grade;
+            renderFleaMarket();
+            renderNotes();
+        }
+
+        function filterFleaCategory(cat) {
+            currentCategory = cat;
+            document.querySelectorAll('.flea-cat-btn').forEach(btn => {
+                btn.classList.remove('bg-brand-600', 'text-white');
+                btn.classList.add('bg-slate-100', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
+            });
+            event.target.classList.add('bg-brand-600', 'text-white');
+            renderFleaMarket();
+        }
+
+        function filterFleaItems() {
+            const query = document.getElementById('fleaSearch').value.toLowerCase();
+            const cards = document.querySelectorAll('#fleaMarketGrid > div');
+            cards.forEach(card => {
+                const text = card.innerText.toLowerCase();
+                card.style.display = text.includes(query) ? 'flex' : 'none';
+            });
+        }
+
+        function openItemDetails(id) {
+            const item = fleaItems.find(i => i.id === id);
+            if (!item) return;
+            const modalContent = document.getElementById('itemModalContent');
+            modalContent.innerHTML = `
+                <div class="space-y-4">
+                    <span class="px-2 py-0.5 rounded bg-brand-100 text-brand-700 text-[10px] font-bold">Class ${item.grade} • ${item.category}</span>
+                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">${item.title}</h3>
+                    <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-3 rounded-xl">
+                        <div>
+                            <p class="text-xs text-slate-400">Asking Price</p>
+                            <p class="text-xl font-black text-brand-600">₹${item.price}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs text-slate-400">Condition</p>
+                            <p class="text-xs font-bold text-emerald-600">${item.condition}</p>
+                        </div>
+                    </div>
+                    <div class="text-xs space-y-1 text-slate-600 dark:text-slate-300">
+                        <p><strong>Seller:</strong> ${item.seller}</p>
+                        <p><strong>Location:</strong> ${item.location} (${item.city})</p>
+                    </div>
+                    <div class="pt-2">
+                        <button onclick="alert('Connect request sent to ${item.seller}!')" class="w-full py-3 bg-brand-600 text-white font-bold rounded-xl text-xs shadow-md">
+                            <i class="fa-brands fa-whatsapp mr-2"></i>Contact Seller on WhatsApp
+                        </button>
+                    </div>
+                </div>
+            `;
+            openModal('itemModal');
+        }
+
+        function downloadNote(title) {
+            const toast = document.createElement('div');
+            toast.className = 'fixed bottom-4 right-4 bg-slate-900 text-white px-4 py-3 rounded-xl text-xs font-bold shadow-2xl z-50 flex items-center gap-2';
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> Downloading ${title}...`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function handleNewListing(e) {
+            e.preventDefault();
+            const title = document.getElementById('newTitle').value;
+            const grade = document.getElementById('newGrade').value;
+            const price = document.getElementById('newPrice').value;
+            const city = document.getElementById('newCity').value;
+            const condition = document.getElementById('newCondition').value || 'Good';
+
+            fleaItems.unshift({
+                id: Date.now(),
+                title: title,
+                price: parseInt(price),
+                originalPrice: parseInt(price) * 2,
+                city: city,
+                grade: grade,
+                category: 'Books',
+                condition: condition,
+                location: `${city} Central`,
+                seller: 'You (Student)',
+                icon: 'fa-book',
+                imageBg: 'bg-brand-100 text-brand-600'
+            });
+
+            closeModal('addListingModal');
+            e.target.reset();
+            renderFleaMarket();
+        }
+
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            renderFleaMarket();
+        }
+    </script>
+</body>
+</html>
