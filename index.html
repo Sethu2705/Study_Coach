@@ -1,1143 +1,676 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100">
+<html lang="en" class="h-full bg-slate-900 text-slate-100">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyCoach - Class 8-10 Peer Resources, Flea Market & StudyCoachAi</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts: Plus Jakarta Sans -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind Custom Configuration -->
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            100: '#e0e7ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
-                            900: '#312e81',
-                        },
-                        accent: {
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            purple: '#8b5cf6',
-                            rose: '#f43f5e'
-                        }
-                    }
-                }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StudyCoach Platform & StudyCoachAi Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
             }
+          }
         }
-    </script>
-    
-    <style>
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.92);
-            backdrop-filter: blur(12px);
-        }
-        .dark .glass-nav {
-            background: rgba(15, 23, 42, 0.92);
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 9999px;
-        }
-        .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #334155;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    body { font-family: 'Inter', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+  </style>
 </head>
-<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+<body class="h-full flex flex-col overflow-hidden bg-slate-950">
 
-    <!-- Top Navigation Header -->
-    <header class="sticky top-0 z-40 glass-nav border-b border-slate-200 dark:border-slate-800 shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                
-                <!-- Logo & Brand Title -->
-                <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('flea')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 via-accent-purple to-indigo-700 flex items-center justify-center text-white shadow-lg shadow-brand-500/30">
-                        <i class="fa-solid fa-graduation-cap text-xl font-bold"></i>
-                    </div>
-                    <div>
-                        <span class="text-xl sm:text-2xl font-extrabold bg-gradient-to-r from-brand-600 via-accent-purple to-indigo-600 bg-clip-text text-transparent tracking-tight">StudyCoach</span>
-                        <span class="hidden sm:inline-block text-[10px] font-bold px-2 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 ml-2">Class 8–10 Hub</span>
-                    </div>
-                </div>
+  <!-- Navigation Bar -->
+  <header class="bg-slate-900 border-b border-slate-800 px-6 py-4 flex items-center justify-between flex-wrap gap-4 shrink-0">
+    <div class="flex items-center space-x-3">
+      <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/20">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div>
+        <h1 class="font-bold text-lg leading-tight text-white">StudyCoach <span class="text-indigo-400 font-medium text-xs px-2 py-0.5 rounded-full bg-indigo-950 border border-indigo-800">AI Hub</span></h1>
+        <p class="text-xs text-slate-400">Personalized Learning & Task Orchestrator</p>
+      </div>
+    </div>
 
-                <!-- Global City & Grade Controls -->
-                <div class="flex flex-row items-center gap-2 w-auto">
-                    <!-- City Select -->
-                    <select id="headerCitySelect" onchange="handleCityChange(this.value)" class="text-xs md:text-sm px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-xl font-bold border border-slate-200 dark:border-slate-700 outline-none focus:ring-2 focus:ring-brand-500">
-                        <option value="Pune">📍 Pune</option>
-                        <option value="Bangalore">📍 Bangalore</option>
-                        <option value="Chennai">📍 Chennai</option>
-                    </select>
+    <div class="flex items-center space-x-3">
+      <!-- Universal Quick Add Button -->
+      <button onclick="openAddItemModal()" class="bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg shadow-indigo-600/30 flex items-center space-x-2 transition-all transform active:scale-95">
+        <i class="fa-solid fa-plus"></i>
+        <span>Add New Item</span>
+      </button>
+      <div class="h-6 w-px bg-slate-800 hidden sm:block"></div>
+      <div class="flex items-center space-x-2 text-xs bg-slate-800/80 px-3 py-2 rounded-xl border border-slate-700">
+        <i class="fa-solid fa-fire text-amber-500 text-sm"></i>
+        <span class="text-slate-300 font-medium">5 Day Streak</span>
+      </div>
+    </div>
+  </header>
 
-                    <!-- Class Select -->
-                    <select id="headerGradeSelect" onchange="handleGradeChange(this.value === 'all' ? 'all' : this.value.replace('Class ', ''))" class="text-xs md:text-sm px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 rounded-xl font-bold border border-slate-200 dark:border-slate-700 outline-none focus:ring-2 focus:ring-brand-500">
-                        <option value="all">All Classes</option>
-                        <option value="Class 8">Class 8</option>
-                        <option value="Class 9">Class 9</option>
-                        <option value="Class 10">Class 10</option>
-                    </select>
-                </div>
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-slate-900/60 border-r border-slate-800/80 p-4 hidden md:flex flex-col justify-between shrink-0">
+      <nav class="space-y-1.5">
+        <button onclick="switchTab('dashboard')" id="nav-dashboard" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">
+          <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+          <span>Dashboard</span>
+        </button>
+        <button onclick="switchTab('items')" id="nav-items" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+          <i class="fa-solid fa-list-check w-5 text-center"></i>
+          <span>My Study Items</span>
+          <span id="item-count-badge" class="ml-auto text-xs bg-indigo-950 text-indigo-300 px-2 py-0.5 rounded-full border border-indigo-800">0</span>
+        </button>
+        <button onclick="switchTab('ai-assistant')" id="nav-ai-assistant" class="w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800/60 hover:text-slate-200">
+          <i class="fa-solid fa-wand-magic-sparkles w-5 text-center text-amber-400"></i>
+          <span>StudyCoach AI</span>
+        </button>
+      </nav>
 
-                <div class="flex items-center gap-2">
-                    <button id="themeToggleBtn" onclick="toggleDarkMode()" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                        <i class="fa-solid fa-moon text-lg dark:hidden"></i>
-                        <i class="fa-solid fa-sun text-lg hidden dark:block text-amber-400"></i>
-                    </button>
-                    
-                    <!-- Auth State Button (Login / Profile) -->
-                    <div id="navAuthContainer">
-                        <button onclick="openAuthModal('login')" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all flex items-center gap-2">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <span>Log In / Sign Up</span>
-                        </button>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="hidden sm:flex items-center gap-2">
-                        <button onclick="checkAuthAndAction(() => openModal('addListingModal'), 'sell an item')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-700 hover:to-indigo-700 text-white font-semibold text-xs shadow-md shadow-brand-500/20 transition-all">
-                            <i class="fa-solid fa-plus"></i>
-                            <span>Sell Item</span>
-                        </button>
-
-                        <button onclick="checkAuthAndAction(() => openModal('addNoteModal'), 'upload e-notes')" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-brand-600 dark:text-brand-400 font-semibold text-xs border border-brand-500/30 transition-all">
-                            <i class="fa-solid fa-file-arrow-up"></i>
-                            <span>Upload Note</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
+      <!-- AI Status Widget -->
+      <div class="bg-slate-800/40 rounded-xl p-3 border border-slate-800 text-xs text-slate-400">
+        <div class="flex items-center space-x-2 text-indigo-300 font-medium mb-1">
+          <i class="fa-solid fa-circle-dot text-emerald-400 animate-pulse text-[10px]"></i>
+          <span>Auto-Item Intelligence</span>
         </div>
-    </header>
+        <p class="leading-relaxed">When you add items, StudyCoach AI automatically tags subjects, calculates estimated time, and recommends review schedules.</p>
+      </div>
+    </aside>
 
-    <!-- Navigation Tabs Bar -->
-    <nav class="bg-white dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700/80 sticky top-16 z-30 shadow-xs">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between overflow-x-auto custom-scrollbar gap-2 py-2">
-                <div class="flex items-center gap-1 sm:gap-2 min-w-max">
-                    <button onclick="switchTab('flea')" id="tab-btn-flea" class="tab-btn active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 bg-brand-50 dark:bg-brand-900/40 text-brand-600 dark:text-brand-300 transition-all">
-                        <i class="fa-solid fa-store"></i>
-                        <span>Second-Hand Flea Market</span>
-                        <span id="fleaBadge" class="ml-1 px-1.5 py-0.5 text-[10px] bg-brand-200 dark:bg-brand-800 text-brand-800 dark:text-brand-200 rounded-full">8 Items</span>
-                    </button>
+    <!-- Main Content Panel -->
+    <main class="flex-1 flex flex-col overflow-y-auto custom-scrollbar p-6 space-y-6">
 
-                    <button onclick="switchTab('notes')" id="tab-btn-notes" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        <span>E-Notes & PDFs</span>
-                    </button>
-
-                    <button onclick="switchTab('hackathons')" id="tab-btn-hackathons" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all">
-                        <i class="fa-solid fa-laptop-code text-accent-purple"></i>
-                        <span>Nearby Hackathons & Fairs</span>
-                        <span class="px-1.5 py-0.5 text-[10px] bg-accent-purple/20 text-accent-purple rounded-full font-extrabold">Pune/BLR/MAA</span>
-                    </button>
-
-                    <!-- Dedicated AI Section Tab -->
-                    <button onclick="switchTab('ai')" id="tab-btn-ai" class="tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-all border border-brand-500/30">
-                        <i class="fa-solid fa-wand-magic-sparkles text-amber-500 animate-pulse"></i>
-                        <span class="bg-gradient-to-r from-brand-600 to-accent-purple bg-clip-text text-transparent font-extrabold">StudyCoachAi</span>
-                    </button>
-                </div>
-            </div>
+      <!-- TOP METRICS BAR -->
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Total Items Added</p>
+            <p id="stat-total" class="text-2xl font-bold text-white mt-1">0</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center text-lg border border-indigo-500/20">
+            <i class="fa-solid fa-folder-open"></i>
+          </div>
         </div>
-    </nav>
 
-    <!-- Main Container Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Completed Tasks</p>
+            <p id="stat-completed" class="text-2xl font-bold text-emerald-400 mt-1">0</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-lg border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check"></i>
+          </div>
+        </div>
 
-        <!-- SECTION 1: Flea Market -->
-        <section id="section-flea" class="tab-content space-y-6">
-            <!-- Header Banner -->
-            <div class="bg-gradient-to-r from-brand-700 via-indigo-700 to-purple-800 rounded-2xl p-6 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div class="relative z-10 space-y-1">
-                    <span class="px-2.5 py-1 rounded-full bg-white/20 text-[11px] font-bold uppercase tracking-wider">Peer-to-Peer Campus Marketplace</span>
-                    <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight">Class 8-10 Flea Market</h1>
-                    <p class="text-slate-200 text-xs sm:text-sm max-w-xl">nothing available at the moment</p>
-                </div>
-                <div class="flex items-center gap-2 z-10">
-                    <span class="text-xs bg-black/30 px-3 py-1.5 rounded-xl border border-white/10 font-semibold" id="fleaCityTag">📍 Showing items near Pune</span>
-                </div>
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 font-medium">Completion Rate</p>
+            <p id="stat-rate" class="text-2xl font-bold text-violet-400 mt-1">0%</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-violet-500/10 text-violet-400 flex items-center justify-center text-lg border border-violet-500/20">
+            <i class="fa-solid fa-chart-line"></i>
+          </div>
+        </div>
+
+        <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex items-center justify-between">
+          <div>
+            <p class="text-xs text-slate-400 font-medium">AI Subtasks Generated</p>
+            <p id="stat-ai-gen" class="text-2xl font-bold text-amber-400 mt-1">0</p>
+          </div>
+          <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg border border-amber-500/20">
+            <i class="fa-solid fa-robot"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 1: DASHBOARD VIEW -->
+      <div id="view-dashboard" class="space-y-6">
+        <!-- Add Quick Banner -->
+        <div class="bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-indigo-500/30 rounded-2xl p-6 relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div class="space-y-1 relative z-10">
+            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-400">What happens when you add an item?</span>
+            <h2 class="text-xl font-bold text-white">Instant AI Breakdown & Progress Tracking</h2>
+            <p class="text-sm text-slate-300 max-w-xl">
+              Adding a study task, flashcard deck, or note triggers StudyCoach AI to assess priority, suggest estimated study duration, split items into manageable subtasks, and update your mastery statistics automatically.
+            </p>
+          </div>
+          <button onclick="openAddItemModal()" class="relative z-10 shrink-0 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-5 py-3 rounded-xl shadow-lg transition-all flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-plus-circle"></i>
+            <span>Add Item Now</span>
+          </button>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-slate-900 border border-slate-800 p-4 rounded-2xl">
+          <div class="relative w-full sm:w-72">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-500 text-sm"></i>
+            <input type="text" id="search-input" oninput="renderItems()" placeholder="Search items or tags..." class="w-full bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-xl pl-9 pr-4 py-2 focus:outline-none focus:border-indigo-500">
+          </div>
+
+          <div class="flex items-center space-x-2 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
+            <button onclick="setFilter('all')" id="filter-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white border border-indigo-500">All</button>
+            <button onclick="setFilter('Task')" id="filter-Task" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-slate-200">Tasks</button>
+            <button onclick="setFilter('Note')" id="filter-Note" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-slate-200">Notes</button>
+            <button onclick="setFilter('Flashcards')" id="filter-Flashcards" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-slate-200">Flashcards</button>
+            <button onclick="setFilter('Goal')" id="filter-Goal" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-slate-200">Goals</button>
+          </div>
+        </div>
+
+        <!-- Items Container Grid -->
+        <div id="items-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Items populated via JS -->
+        </div>
+      </div>
+
+      <!-- TAB 2: MY STUDY ITEMS -->
+      <div id="view-items" class="hidden space-y-4">
+        <h2 class="text-xl font-bold text-white">All Active & Archived Study Items</h2>
+        <div id="items-list-detailed" class="space-y-3">
+          <!-- Detailed item list generated via JS -->
+        </div>
+      </div>
+
+      <!-- TAB 3: STUDYCOACH AI ASSISTANT -->
+      <div id="view-ai-assistant" class="hidden space-y-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-4">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center text-lg border border-amber-500/20">
+              <i class="fa-solid fa-wand-magic-sparkles"></i>
             </div>
-
-            <!-- Filters & Search -->
-            <div class="flex flex-col sm:flex-row gap-3 justify-between items-center bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-sm">
-                <div class="relative w-full sm:w-80">
-                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3 text-slate-400 text-sm"></i>
-                    <input type="text" id="fleaSearch" onkeyup="filterFleaItems()" placeholder="Search books, lab coats, geometry kits..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-xs focus:ring-2 focus:ring-brand-500 outline-none">
-                </div>
-                <div class="flex items-center gap-2 w-full sm:w-auto overflow-x-auto">
-                    <button onclick="filterFleaCategory('all')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-brand-600 text-white whitespace-nowrap">All Items</button>
-                    <button onclick="filterFleaCategory('Books')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Textbooks</button>
-                    <button onclick="filterFleaCategory('Equipment')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Lab & Geometry</button>
-                    <button onclick="filterFleaCategory('Notes')" class="flea-cat-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 whitespace-nowrap">Handwritten Notes</button>
-                </div>
+            <div>
+              <h3 class="font-bold text-slate-100">StudyCoach AI Assistant</h3>
+              <p class="text-xs text-slate-400">Ask AI to analyze your items, make quiz questions, or generate study plans.</p>
             </div>
+          </div>
 
-            <!-- Flea Market Grid -->
-            <div id="fleaMarketGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
-                <!-- Javascript will dynamically inject items here -->
+          <div id="ai-chat-output" class="bg-slate-950 border border-slate-800/80 rounded-xl p-4 min-h-[220px] max-h-[350px] overflow-y-auto space-y-3 text-sm text-slate-300">
+            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 text-slate-300">
+              <span class="text-xs font-semibold text-indigo-400 block mb-1"><i class="fa-solid fa-robot mr-1"></i> StudyCoach AI:</span>
+              Hello! Whenever you add an item using the <b>"+ Add New Item"</b> button, I can automatically generate key takeaways, flashcard decks, or sub-action items for you. Select any item from your dashboard or ask me a question below!
             </div>
-        </section>
+          </div>
 
-        <!-- SECTION 2: E-Notes & PDFs -->
-        <section id="section-notes" class="tab-content hidden space-y-6">
-            <div class="bg-slate-800 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <span class="px-2.5 py-1 rounded-full bg-brand-500/30 text-brand-300 text-[11px] font-bold uppercase tracking-wider">Free Educational Vault</span>
-                    <h2 class="text-2xl font-extrabold mt-1">E-Notes, PDFs & PYQ Question Banks</h2>
-                    <p class="text-slate-300 text-xs sm:text-sm mt-1">Download topper notes, formula sheets, and solved previous year papers for Class 8, 9 & 10 (CBSE/ICSE).</p>
-                </div>
-                <div class="flex flex-wrap items-center gap-2">
-                    <button onclick="checkAuthAndAction(() => openModal('addNoteModal'), 'upload e-notes')" class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs flex items-center gap-2 shadow-lg transition-all">
-                        <i class="fa-solid fa-cloud-arrow-up"></i>
-                        <span>Upload E-Note / PDF</span>
-                    </button>
-                    <button onclick="switchTab('ai')" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold text-xs flex items-center gap-2 shadow-lg hover:brightness-110 transition-all">
-                        <i class="fa-solid fa-sparkles"></i>
-                        <span>Summarize Notes with StudyCoachAi</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Notes Cards Grid -->
-            <div id="notesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                <!-- Injected via Javascript -->
-            </div>
-        </section>
-
-        <!-- SECTION 3: Hackathons & Fairs -->
-        <section id="section-hackathons" class="tab-content hidden space-y-6">
-            <div class="bg-gradient-to-r from-accent-purple via-indigo-800 to-slate-900 text-white rounded-2xl p-6 shadow-xl flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="px-2 py-0.5 rounded bg-accent-purple/40 text-xs font-bold">Class 8-10 Competitions</span>
-                        <span class="text-xs text-slate-300" id="hackathonCityHeader">📍 City: Pune</span>
-                    </div>
-                    <h2 class="text-2xl font-extrabold mt-1">School Hackathons & Science Fairs</h2>
-                    <p class="text-slate-300 text-xs sm:text-sm mt-1">Discover upcoming STEM challenges, robotics competitions, and coding hackathons in Pune, Bangalore & Chennai.</p>
-                </div>
-            </div>
-
-            <!-- Hackathons Grid -->
-            <div id="hackathonsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- Injected via Javascript -->
-            </div>
-        </section>
-
-        <!-- SECTION 4: StudyCoachAi Workspace -->
-        <section id="section-ai" class="tab-content hidden space-y-6">
-            <div class="w-full h-[calc(100vh-180px)] min-h-[600px] bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700/80 shadow-md overflow-hidden relative">
-                <iframe 
-                    src="https://studycoach-puce.vercel.app/" 
-                    class="w-full h-full border-0" 
-                    title="StudyCoachAi"
-                    allow="microphone; camera; clipboard-write; autoplay; encrypted-media; fullscreen"
-                    loading="lazy">
-                </iframe>
-            </div>
-        </section>
+          <div class="flex items-center space-x-2">
+            <input type="text" id="ai-chat-input" placeholder="Ask AI e.g. 'Create a 3-step revision plan for my Biology note'..." class="flex-1 bg-slate-950 border border-slate-800 text-slate-200 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-indigo-500">
+            <button onclick="sendAiPrompt()" class="bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold px-4 py-2.5 rounded-xl flex items-center space-x-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Send</span>
+            </button>
+          </div>
+        </div>
+      </div>
 
     </main>
+  </div>
 
-    <!-- Modal: View PDF in App -->
-    <div id="pdfViewerModal" class="fixed inset-0 bg-black/70 backdrop-blur-xs z-50 hidden flex flex-col items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-4xl w-full h-[85vh] p-4 flex flex-col space-y-3 shadow-2xl relative border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-3">
-                <div class="flex items-center gap-2">
-                    <i class="fa-solid fa-file-pdf text-red-500 text-xl"></i>
-                    <h3 id="pdfViewerTitle" class="text-base font-bold text-slate-900 dark:text-white truncate max-w-md">PDF Viewer</h3>
-                </div>
-                <button onclick="closeModal('pdfViewerModal')" class="text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-            <div class="flex-1 w-full bg-slate-100 dark:bg-slate-900 rounded-xl overflow-hidden relative">
-                <iframe id="pdfFrame" class="w-full h-full border-0"></iframe>
-            </div>
+  <!-- ADD ITEM MODAL -->
+  <div id="add-item-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl transform transition-all">
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between">
+        <h3 class="font-bold text-slate-100 flex items-center space-x-2">
+          <i class="fa-solid fa-plus-circle text-indigo-400"></i>
+          <span>Add New Study Item</span>
+        </h3>
+        <button onclick="closeAddItemModal()" class="text-slate-400 hover:text-white text-lg">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="add-item-form" onsubmit="handleAddItemSubmit(event)" class="p-6 space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1">Item Title *</label>
+          <input type="text" id="item-title" required placeholder="e.g., Read Calculus Chapter 4 or Organic Chemistry Reactions" class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500">
         </div>
-    </div>
 
-    <!-- Modal: Item Detail / Contact Seller -->
-    <div id="itemModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
-            <button onclick="closeModal('itemModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Type</label>
+            <select id="item-type" class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500">
+              <option value="Task">Study Task</option>
+              <option value="Note">Notes / Resource</option>
+              <option value="Flashcards">Flashcard Deck</option>
+              <option value="Goal">Goal Target</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Subject Tag</label>
+            <select id="item-subject" class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500">
+              <option value="Mathematics">Mathematics</option>
+              <option value="Science">Science</option>
+              <option value="Computer Science">Computer Science</option>
+              <option value="History">History</option>
+              <option value="Languages">Languages</option>
+              <option value="General">General</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Priority</label>
+            <select id="item-priority" class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500">
+              <option value="Medium">Medium</option>
+              <option value="High">High Priority</option>
+              <option value="Low">Low Priority</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1">Target Date / Due</label>
+            <input type="date" id="item-date" class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-400 mb-1">Description / Notes (Optional)</label>
+          <textarea id="item-description" rows="3" placeholder="Key topics, textbook page numbers, or learning objectives..." class="w-full bg-slate-950 border border-slate-800 text-slate-100 text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-indigo-500 custom-scrollbar"></textarea>
+        </div>
+
+        <!-- AI Toggle option -->
+        <div class="bg-indigo-950/40 border border-indigo-800/50 p-3 rounded-xl flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i>
+            <div>
+              <p class="text-xs font-semibold text-slate-200">Auto-Generate Subtasks with AI</p>
+              <p class="text-[11px] text-slate-400">AI will automatically create 2-3 action steps.</p>
+            </div>
+          </div>
+          <input type="checkbox" id="item-ai-enable" checked class="w-4 h-4 accent-indigo-600 rounded cursor-pointer">
+        </div>
+
+        <div class="pt-2 flex items-center justify-end space-x-3">
+          <button type="button" onclick="closeAddItemModal()" class="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800">Cancel</button>
+          <button type="submit" class="bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm px-5 py-2.5 rounded-xl shadow-lg shadow-indigo-600/30 flex items-center space-x-2">
+            <i class="fa-solid fa-check"></i>
+            <span>Add Item & Sync</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 border border-emerald-500/50 text-slate-100 px-4 py-3 rounded-xl shadow-2xl flex items-center space-x-3 pointer-events-none">
+    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+      <i class="fa-solid fa-circle-check"></i>
+    </div>
+    <div>
+      <p id="toast-title" class="text-xs font-bold text-emerald-400">Success!</p>
+      <p id="toast-message" class="text-xs text-slate-300">Item successfully added to your study board.</p>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // Default Initial Items if LocalStorage is empty
+    const initialItems = [
+      {
+        id: "item-1",
+        title: "Review Linear Algebra Vector Spaces",
+        type: "Task",
+        subject: "Mathematics",
+        priority: "High",
+        dueDate: "2026-09-28",
+        description: "Study basis vectors, linear independence, and span concept exercises.",
+        status: "Pending",
+        subtasks: [
+          { text: "Solve practice problems #1-10", done: false },
+          { text: "Summarize core theorems on note card", done: false }
+        ],
+        estMinutes: 45,
+        createdAt: new Date().toISOString()
+      },
+      {
+        id: "item-2",
+        title: "Python Data Structures Summary",
+        type: "Note",
+        subject: "Computer Science",
+        priority: "Medium",
+        dueDate: "2026-09-30",
+        description: "Hash maps, binary search trees, and time complexity chart.",
+        status: "Completed",
+        subtasks: [
+          { text: "Review Big-O complexity table", done: true }
+        ],
+        estMinutes: 30,
+        createdAt: new Date().toISOString()
+      }
+    ];
+
+    let items = [];
+    let currentFilter = 'all';
+
+    window.onload = function() {
+      // Load saved items from localStorage or fallback to defaults
+      const saved = localStorage.getItem('studycoach_items');
+      if (saved) {
+        try {
+          items = JSON.parse(saved);
+        } catch(e) {
+          items = [...initialItems];
+        }
+      } else {
+        items = [...initialItems];
+        saveItemsToStorage();
+      }
+
+      // Default date value in modal
+      document.getElementById('item-date').valueAsDate = new Date();
+
+      renderItems();
+      updateStats();
+    };
+
+    function saveItemsToStorage() {
+      localStorage.setItem('studycoach_items', JSON.stringify(items));
+    }
+
+    function switchTab(tabName) {
+      document.getElementById('view-dashboard').classList.add('hidden');
+      document.getElementById('view-items').classList.add('hidden');
+      document.getElementById('view-ai-assistant').classList.add('hidden');
+
+      document.getElementById('nav-dashboard').className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800/60 hover:text-slate-200";
+      document.getElementById('nav-items').className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800/60 hover:text-slate-200";
+      document.getElementById('nav-ai-assistant').className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors text-slate-400 hover:bg-slate-800/60 hover:text-slate-200";
+
+      document.getElementById(`view-${tabName}`).classList.remove('hidden');
+      const activeNav = document.getElementById(`nav-${tabName}`);
+      activeNav.className = "w-full flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-colors bg-indigo-600/20 text-indigo-400 border border-indigo-500/30";
+    }
+
+    function openAddItemModal() {
+      document.getElementById('add-item-modal').classList.remove('hidden');
+    }
+
+    function closeAddItemModal() {
+      document.getElementById('add-item-modal').classList.add('hidden');
+      document.getElementById('add-item-form').reset();
+      document.getElementById('item-date').valueAsDate = new Date();
+    }
+
+    function handleAddItemSubmit(event) {
+      event.preventDefault();
+
+      const title = document.getElementById('item-title').value.trim();
+      const type = document.getElementById('item-type').value;
+      const subject = document.getElementById('item-subject').value;
+      const priority = document.getElementById('item-priority').value;
+      const dueDate = document.getElementById('item-date').value;
+      const description = document.getElementById('item-description').value.trim();
+      const aiEnable = document.getElementById('item-ai-enable').checked;
+
+      // Calculate estimated time based on priority & length
+      const estMinutes = priority === 'High' ? 60 : priority === 'Medium' ? 30 : 15;
+
+      // Auto-generate AI subtasks if requested
+      const generatedSubtasks = [];
+      if (aiEnable) {
+        generatedSubtasks.push({ text: `Review key concepts of ${title}`, done: false });
+        generatedSubtasks.push({ text: `Complete active recall quiz for ${subject}`, done: false });
+      }
+
+      const newItem = {
+        id: "item-" + Date.now(),
+        title: title,
+        type: type,
+        subject: subject,
+        priority: priority,
+        dueDate: dueDate || new Date().toISOString().split('T')[0],
+        description: description || "No detailed notes provided.",
+        status: "Pending",
+        subtasks: generatedSubtasks,
+        estMinutes: estMinutes,
+        createdAt: new Date().toISOString()
+      };
+
+      // Push to items array
+      items.unshift(newItem);
+      saveItemsToStorage();
+
+      // Update UI
+      closeAddItemModal();
+      renderItems();
+      updateStats();
+
+      // Show Confirmation Toast
+      showToast("Item Added!", `"${newItem.title}" was processed & added to your board.`);
+
+      // Log to AI Assistant chat output automatically
+      logAiAction(`New Item Added: "${newItem.title}" (${newItem.subject} - ${newItem.type}). ${aiEnable ? 'Generated 2 AI subtasks.' : ''}`);
+    }
+
+    function toggleItemStatus(id) {
+      const item = items.find(i => i.id === id);
+      if (item) {
+        item.status = item.status === 'Completed' ? 'Pending' : 'Completed';
+        saveItemsToStorage();
+        renderItems();
+        updateStats();
+        showToast("Status Updated", `Marked "${item.title}" as ${item.status}.`);
+      }
+    }
+
+    function toggleSubtask(itemId, subIndex) {
+      const item = items.find(i => i.id === itemId);
+      if (item && item.subtasks[subIndex]) {
+        item.subtasks[subIndex].done = !item.subtasks[subIndex].done;
+        saveItemsToStorage();
+        renderItems();
+        updateStats();
+      }
+    }
+
+    function deleteItem(id) {
+      items = items.filter(i => i.id !== id);
+      saveItemsToStorage();
+      renderItems();
+      updateStats();
+      showToast("Item Removed", "The item has been deleted.");
+    }
+
+    function setFilter(filterType) {
+      currentFilter = filterType;
+      ['all', 'Task', 'Note', 'Flashcards', 'Goal'].forEach(f => {
+        const btn = document.getElementById(`filter-${f}`);
+        if (btn) {
+          if (f === filterType) {
+            btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 text-white border border-indigo-500";
+          } else {
+            btn.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 text-slate-400 hover:text-slate-200";
+          }
+        }
+      });
+      renderItems();
+    }
+
+    function renderItems() {
+      const searchVal = document.getElementById('search-input').value.toLowerCase();
+      const grid = document.getElementById('items-grid');
+      const listDetailed = document.getElementById('items-list-detailed');
+
+      let filtered = items.filter(i => {
+        const matchesFilter = currentFilter === 'all' || i.type === currentFilter;
+        const matchesSearch = i.title.toLowerCase().includes(searchVal) || 
+                              i.subject.toLowerCase().includes(searchVal) || 
+                              i.description.toLowerCase().includes(searchVal);
+        return matchesFilter && matchesSearch;
+      });
+
+      // Update navbar item count badge
+      document.getElementById('item-count-badge').innerText = items.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center space-y-3">
+            <i class="fa-solid fa-box-open text-3xl text-slate-600"></i>
+            <p class="text-sm font-medium text-slate-400">No study items found matching your criteria.</p>
+            <button onclick="openAddItemModal()" class="text-xs bg-indigo-600 hover:bg-indigo-500 text-white font-semibold px-4 py-2 rounded-xl">
+              + Add First Item
             </button>
-            <div id="itemModalContent">
-                <!-- Injected via JS -->
-            </div>
-        </div>
-    </div>
+          </div>
+        `;
+        listDetailed.innerHTML = grid.innerHTML;
+        return;
+      }
 
-    <!-- Modal: Add New Flea Market Item -->
-    <div id="addListingModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
-            <button onclick="closeModal('addListingModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
+      // Render Grid Cards
+      grid.innerHTML = filtered.map(item => {
+        const isDone = item.status === 'Completed';
+        const priorityColor = item.priority === 'High' ? 'text-red-400 bg-red-950/60 border-red-800' :
+                              item.priority === 'Medium' ? 'text-amber-400 bg-amber-950/60 border-amber-800' :
+                              'text-emerald-400 bg-emerald-950/60 border-emerald-800';
+
+        return `
+          <div class="bg-slate-900 border ${isDone ? 'border-emerald-500/30' : 'border-slate-800'} rounded-2xl p-5 flex flex-col justify-between space-y-4 hover:border-indigo-500/40 transition-all">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${priorityColor}">
+                  ${item.priority} Priority
+                </span>
+                <span class="text-xs text-slate-400 flex items-center space-x-1">
+                  <i class="fa-regular fa-clock text-[11px]"></i>
+                  <span>${item.estMinutes}m</span>
+                </span>
+              </div>
+
+              <div>
+                <h3 class="font-bold text-slate-100 text-base leading-snug ${isDone ? 'line-through text-slate-500' : ''}">${item.title}</h3>
+                <p class="text-xs text-slate-400 mt-1 line-clamp-2">${item.description}</p>
+              </div>
+
+              <div class="flex flex-wrap gap-1.5 pt-1">
+                <span class="text-[10px] bg-slate-800 text-indigo-300 border border-slate-700 px-2 py-0.5 rounded-md">
+                  ${item.subject}
+                </span>
+                <span class="text-[10px] bg-slate-800 text-slate-300 border border-slate-700 px-2 py-0.5 rounded-md">
+                  ${item.type}
+                </span>
+              </div>
+
+              <!-- Subtasks preview -->
+              ${item.subtasks && item.subtasks.length > 0 ? `
+                <div class="pt-2 border-t border-slate-800/80 space-y-1">
+                  <p class="text-[11px] font-semibold text-slate-400">AI Steps:</p>
+                  ${item.subtasks.map((st, idx) => `
+                    <div class="flex items-center space-x-2 text-xs text-slate-300">
+                      <input type="checkbox" ${st.done ? 'checked' : ''} onchange="toggleSubtask('${item.id}', ${idx})" class="rounded accent-indigo-600">
+                      <span class="${st.done ? 'line-through text-slate-500' : ''}">${st.text}</span>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Card Actions Footer -->
+            <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <button onclick="toggleItemStatus('${item.id}')" class="flex items-center space-x-1.5 font-semibold ${isDone ? 'text-amber-400 hover:text-amber-300' : 'text-emerald-400 hover:text-emerald-300'}">
+                <i class="fa-solid ${isDone ? 'fa-rotate-left' : 'fa-circle-check'}"></i>
+                <span>${isDone ? 'Mark Pending' : 'Complete'}</span>
+              </button>
+
+              <button onclick="deleteItem('${item.id}')" class="text-slate-500 hover:text-red-400 transition-colors">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Render Detailed List
+      listDetailed.innerHTML = filtered.map(item => `
+        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <button onclick="toggleItemStatus('${item.id}')" class="text-lg ${item.status === 'Completed' ? 'text-emerald-400' : 'text-slate-600'}">
+              <i class="fa-solid ${item.status === 'Completed' ? 'fa-circle-check' : 'fa-circle'}"></i>
             </button>
-            <h3 class="text-lg font-bold text-slate-900 dark:text-white">List an Item on Flea Market</h3>
-            <form onsubmit="handleNewListing(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold mb-1">Item Title</label>
-                    <input type="text" id="newTitle" required placeholder="e.g. Class 10 NCERT Science Exemplar" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold mb-1">Target Class</label>
-                        <select id="newGrade" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                            <option value="8">Class 8</option>
-                            <option value="9">Class 9</option>
-                            <option value="10">Class 10</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1">Price (₹)</label>
-                        <input type="number" id="newPrice" required placeholder="e.g. 150" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold mb-1">City</label>
-                    <select id="newCity" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                        <option value="Pune">Pune</option>
-                        <option value="Bangalore">Bangalore</option>
-                        <option value="Chennai">Chennai</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block font-bold mb-1">Condition</label>
-                    <input type="text" id="newCondition" placeholder="e.g. Barely Used, No Highlights" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                </div>
-                <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md shadow-brand-500/30 transition-all">Publish Listing</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal: Upload New E-Note / PDF -->
-    <div id="addNoteModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
-            <button onclick="closeModal('addNoteModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div class="flex items-center gap-2 text-brand-600 dark:text-brand-400">
-                <i class="fa-solid fa-file-pdf text-xl"></i>
-                <h3 class="text-lg font-bold text-slate-900 dark:text-white">Upload E-Note / Study Material</h3>
+            <div>
+              <h4 class="font-semibold text-slate-200 ${item.status === 'Completed' ? 'line-through text-slate-500' : ''}">${item.title}</h4>
+              <p class="text-xs text-slate-400">${item.subject} • Due ${item.dueDate}</p>
             </div>
-            <form onsubmit="handleNewNote(event)" class="space-y-3 text-xs">
-                <div>
-                    <label class="block font-bold mb-1">Title / Topic Name</label>
-                    <input type="text" id="noteTitle" required placeholder="e.g. Class 10 Chemistry Carbon & Its Compounds Mindmap" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold mb-1">Subject</label>
-                        <select id="noteSubject" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                            <option value="Science">Science</option>
-                            <option value="Mathematics">Mathematics</option>
-                            <option value="Social Science">Social Science</option>
-                            <option value="English">English</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1">Target Grade</label>
-                        <select id="noteGrade" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                            <option value="8">Class 8</option>
-                            <option value="9">Class 9</option>
-                            <option value="10" selected>Class 10</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-bold mb-1">Page Count</label>
-                        <input type="text" id="notePages" required placeholder="e.g. 12 Pages" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                    </div>
-                    <div>
-                        <label class="block font-bold mb-1">File Format</label>
-                        <input type="text" id="noteFileType" value="PDF" readonly class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-200 dark:bg-slate-900 text-slate-500 font-bold">
-                    </div>
-                </div>
-                <div>
-                    <label class="block font-bold mb-1">Select PDF File</label>
-                    <input type="file" id="noteFileInput" accept=".pdf" class="w-full p-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-600 bg-slate-50 dark:bg-slate-900 text-slate-500 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                </div>
-                <button type="submit" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md shadow-brand-500/30 transition-all mt-2">
-                    Publish E-Note to Vault
-                </button>
-            </form>
+          </div>
+          <button onclick="deleteItem('${item.id}')" class="text-xs text-slate-500 hover:text-red-400">
+            <i class="fa-solid fa-trash"></i> Delete
+          </button>
         </div>
-    </div>
+      `).join('');
+    }
 
-    <!-- Modal: Sign Up / Log In Prompt -->
-    <div id="authModal" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-slate-800 rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl relative border border-slate-200 dark:border-slate-700">
-            <button onclick="closeModal('authModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-white text-lg">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <div class="text-center space-y-1">
-                <div class="w-12 h-12 rounded-2xl bg-brand-100 dark:bg-brand-900/60 text-brand-600 dark:text-brand-300 flex items-center justify-center text-xl font-extrabold mx-auto mb-2">
-                    <i class="fa-solid fa-lock"></i>
-                </div>
-                <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">Join StudyCoach Platform</h3>
-                <p id="authReasonText" class="text-xs text-brand-600 dark:text-brand-400 font-semibold">Sign in or create a free student account to download notes and connect with sellers.</p>
-            </div>
+    function updateStats() {
+      const total = items.length;
+      const completed = items.filter(i => i.status === 'Completed').length;
+      const rate = total > 0 ? Math.round((completed / total) * 100) : 0;
+      
+      let totalAiSubtasks = 0;
+      items.forEach(i => {
+        if (i.subtasks) totalAiSubtasks += i.subtasks.length;
+      });
 
-            <!-- Auth Form Switcher -->
-            <div class="flex border-b border-slate-200 dark:border-slate-700 text-xs font-bold">
-                <button id="authTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 text-center border-b-2 border-brand-600 text-brand-600">Log In</button>
-                <button id="authTabSignup" onclick="switchAuthTab('signup')" class="flex-1 py-2 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-600">Create Account</button>
-            </div>
+      document.getElementById('stat-total').innerText = total;
+      document.getElementById('stat-completed').innerText = completed;
+      document.getElementById('stat-rate').innerText = `${rate}%`;
+      document.getElementById('stat-ai-gen').innerText = totalAiSubtasks;
+    }
 
-            <form onsubmit="handleAuthSubmit(event)" class="space-y-3 text-xs">
-                <div id="signupFields" class="hidden space-y-3">
-                    <div>
-                        <label class="block font-bold mb-1">Full Name</label>
-                        <input type="text" id="authName" placeholder="e.g. Rohan Sharma" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                    </div>
-                    <div class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block font-bold mb-1">Class Grade</label>
-                            <select id="authGrade" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                                <option value="8">Class 8</option>
-                                <option value="9">Class 9</option>
-                                <option value="10" selected>Class 10</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block font-bold mb-1">City</label>
-                            <select id="authCity" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900">
-                                <option value="Pune">Pune</option>
-                                <option value="Bangalore">Bangalore</option>
-                                <option value="Chennai">Chennai</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+    function showToast(title, msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-title').innerText = title;
+      document.getElementById('toast-message').innerText = msg;
 
-                <div>
-                    <label class="block font-bold mb-1">Email / Phone Number</label>
-                    <input type="text" id="authIdentifier" required placeholder="student@school.com or 10-digit mobile" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
 
-                <div>
-                    <label class="block font-bold mb-1">Password</label>
-                    <input type="password" id="authPassword" required placeholder="••••••••" class="w-full p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 outline-none focus:ring-2 focus:ring-brand-500">
-                </div>
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
 
-                <button type="submit" id="authSubmitBtn" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-bold shadow-md shadow-brand-500/30 transition-all mt-2">
-                    Log In to Continue
-                </button>
-            </form>
-            
-            <p class="text-[10px] text-center text-slate-400">By continuing, you agree to StudyCoach Safety & Anti-Spam Guidelines for Class 8-10 students.</p>
-        </div>
-    </div>
+    function logAiAction(text) {
+      const chat = document.getElementById('ai-chat-output');
+      const entry = document.createElement('div');
+      entry.className = "bg-indigo-950/40 p-3 rounded-lg border border-indigo-800/40 text-xs text-slate-300";
+      entry.innerHTML = `<span class="font-semibold text-indigo-400"><i class="fa-solid fa-bolt mr-1"></i> AI Hub Event:</span> ${text}`;
+      chat.appendChild(entry);
+      chat.scrollTop = chat.scrollHeight;
+    }
 
-    <script>
-        // Data & User Authentication State
-        let currentCity = 'Pune';
-        let currentGrade = 'all';
-        let currentCategory = 'all';
+    function sendAiPrompt() {
+      const input = document.getElementById('ai-chat-input');
+      const text = input.value.trim();
+      if (!text) return;
 
-        // Direct Real Data Collections (Pre-populated)
-        const fleaItems = [
-            {
-                id: 1,
-                title: "Class 10 RS Aggarwal Mathematics (2024-25 Edition)",
-                grade: "10",
-                price: 220,
-                originalPrice: 480,
-                city: "Pune",
-                condition: "Like New",
-                seller: "Aarav S.",
-                category: "Books",
-                location: "Kothrud, Pune"
-            },
-            {
-                id: 2,
-                title: "Class 10 NCERT Science Exemplar & Lab Manual Set",
-                grade: "10",
-                price: 180,
-                originalPrice: 350,
-                city: "Pune",
-                condition: "Barely Used",
-                seller: "Ananya Deshmukh",
-                category: "Books",
-                location: "Viman Nagar, Pune"
-            },
-            {
-                id: 3,
-                title: "Class 9 RD Sharma Mathematics with Worked Solutions",
-                grade: "9",
-                price: 250,
-                originalPrice: 520,
-                city: "Bangalore",
-                condition: "Good Condition",
-                seller: "Rohan Kumar",
-                category: "Books",
-                location: "Koramangala, Bangalore"
-            },
-            {
-                id: 4,
-                title: "Camlin Geometry Box & Engineering Drawing Instrument Kit",
-                grade: "8",
-                price: 120,
-                originalPrice: 280,
-                city: "Pune",
-                condition: "Like New",
-                seller: "Neha P.",
-                category: "Equipment",
-                location: "FC Road, Pune"
-            },
-            {
-                id: 5,
-                title: "Class 10 CBSE All-In-One Social Science (Arihant)",
-                grade: "10",
-                price: 190,
-                originalPrice: 420,
-                city: "Chennai",
-                condition: "Gently Used",
-                seller: "Karthik Raja",
-                category: "Books",
-                location: "Anna Nagar, Chennai"
-            },
-            {
-                id: 6,
-                title: "Class 9 ICSE Together With Physics Practice Papers",
-                grade: "9",
-                price: 160,
-                originalPrice: 380,
-                city: "Chennai",
-                condition: "No Highlights",
-                seller: "Priya V.",
-                category: "Books",
-                location: "Adyar, Chennai"
-            },
-            {
-                id: 7,
-                title: "Class 8 NCERT Science & Maths Workbook Combo",
-                grade: "8",
-                price: 140,
-                originalPrice: 300,
-                city: "Bangalore",
-                condition: "Good Condition",
-                seller: "Siddharth M.",
-                category: "Books",
-                location: "Indiranagar, Bangalore"
-            },
-            {
-                id: 8,
-                title: "Class 10 Handcrafted Chemistry Formula Cards & Reaction Charts",
-                grade: "10",
-                price: 90,
-                originalPrice: 200,
-                city: "Pune",
-                condition: "Handmade Topper",
-                seller: "Shruti Joshi",
-                category: "Notes",
-                location: "Aundh, Pune"
-            }
-        ];
+      const chat = document.getElementById('ai-chat-output');
+      
+      // Add user message
+      const userMsg = document.createElement('div');
+      userMsg.className = "bg-slate-800 p-3 rounded-lg border border-slate-700 text-xs text-slate-200 text-right";
+      userMsg.innerText = text;
+      chat.appendChild(userMsg);
 
-        const notesItems = [
-            {
-                id: 101,
-                title: "Class 10 Physics - Ray Diagrams, Light & Human Eye Quick Revision",
-                grade: "10",
-                subject: "Science",
-                fileType: "PDF",
-                pages: "14 Pages",
-                downloads: 248,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            },
-            {
-                id: 102,
-                title: "Class 10 Mathematics - Trigonometry & Circles Board Formula Sheet",
-                grade: "10",
-                subject: "Mathematics",
-                fileType: "PDF",
-                pages: "8 Pages",
-                downloads: 312,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            },
-            {
-                id: 103,
-                title: "Class 9 Science - Motion, Gravitation & Laws of Motion Short Notes",
-                grade: "9",
-                subject: "Science",
-                fileType: "PDF",
-                pages: "12 Pages",
-                downloads: 185,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            },
-            {
-                id: 104,
-                title: "Class 10 Chemistry - Carbon & Its Compounds Mindmaps & Equations",
-                grade: "10",
-                subject: "Science",
-                fileType: "PDF",
-                pages: "10 Pages",
-                downloads: 290,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            },
-            {
-                id: 105,
-                title: "Class 8 Science - Cell Structure, Microorganisms & Crop Production",
-                grade: "8",
-                subject: "Science",
-                fileType: "PDF",
-                pages: "9 Pages",
-                downloads: 142,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            },
-            {
-                id: 106,
-                title: "Class 10 Social Science - Nationalism in India Board PYQ Bank",
-                grade: "10",
-                subject: "Social Science",
-                fileType: "PDF",
-                pages: "18 Pages",
-                downloads: 215,
-                pdfUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf"
-            }
-        ];
+      input.value = '';
 
-        const hackathonsData = [
-            {
-                id: 201,
-                title: "Pune Junior STEM & Robotics Expo 2026",
-                city: "Pune",
-                tag: "Robotics & Innovation",
-                prize: "₹50,000 Cash Pool + Medals",
-                date: "Nov 14 - Nov 15, 2026",
-                venue: "MIT World Peace University, Kothrud, Pune"
-            },
-            {
-                id: 202,
-                title: "PMC School Science Fair & Green Tech Challenge",
-                city: "Pune",
-                tag: "Science Fair",
-                prize: "₹25,000 + Trophies",
-                date: "Oct 28, 2026",
-                venue: "Science and Technology Park, Ganeshkhind, Pune"
-            },
-            {
-                id: 203,
-                title: "Bengaluru High School Hackathon & AI Sprint",
-                city: "Bangalore",
-                tag: "Coding & AI",
-                prize: "₹75,000 + Tech Mentorship",
-                date: "Nov 02 - Nov 03, 2026",
-                venue: "IISc Open Campus & Convention Center, Bengaluru"
-            },
-            {
-                id: 204,
-                title: "Bangalore Junior Makers & IoT Innovation Fair",
-                city: "Bangalore",
-                tag: "Hardware & IoT",
-                prize: "₹40,000 Cash Prize",
-                date: "Dec 10, 2026",
-                venue: "Indiranagar Club Auditorium, Bengaluru"
-            },
-            {
-                id: 205,
-                title: "Chennai Student Coding & App Innovation League",
-                city: "Chennai",
-                tag: "App Development",
-                prize: "₹60,000 + Certificates",
-                date: "Oct 20, 2026",
-                venue: "SRM Institute Campus, Vadapalani, Chennai"
-            },
-            {
-                id: 206,
-                title: "Tamil Nadu High School Eco-Tech & Science Expo",
-                city: "Chennai",
-                tag: "Science & Sustainability",
-                prize: "₹35,000 + Medals",
-                date: "Nov 22, 2026",
-                venue: "Anna University Alumni Hall, Guindy, Chennai"
-            }
-        ];
-
-        // Auth State
-        let currentUser = null; // null = Not logged in
-        let currentAuthMode = 'login';
-        let pendingAction = null;
-
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-            const isDark = document.documentElement.classList.contains('dark');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        }
-
-        function openModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.classList.remove('hidden');
-        }
-
-        function closeModal(modalId) {
-            const modal = document.getElementById(modalId);
-            if (modal) modal.classList.add('hidden');
-        }
-
-        function renderFleaMarket() {
-            const grid = document.getElementById('fleaMarketGrid');
-            if (!grid) return;
-
-            const cityTag = document.getElementById('fleaCityTag');
-            if (cityTag) cityTag.innerText = `📍 Showing items near ${currentCity}`;
-
-            const filtered = fleaItems.filter(item => {
-                const matchesCity = item.city === currentCity;
-                const matchesGrade = currentGrade === 'all' || item.grade === String(currentGrade);
-                const matchesCat = currentCategory === 'all' || item.category === currentCategory;
-                return matchesCity && matchesGrade && matchesCat;
-            });
-
-            const badge = document.getElementById('fleaBadge');
-            if (badge) badge.innerText = `${filtered.length} Items`;
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-12 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-                        <i class="fa-solid fa-box-open text-4xl text-slate-300 dark:text-slate-600 mb-3"></i>
-                        <p class="font-bold text-slate-600 dark:text-slate-300 text-sm">No items found for ${currentCity} (${currentGrade === 'all' ? 'All Classes' : 'Class ' + currentGrade}).</p>
-                        <p class="text-xs text-slate-400 mt-1">Be the first student to list a textbook or material!</p>
-                        <button onclick="checkAuthAndAction(() => openModal('addListingModal'), 'sell an item')" class="mt-4 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all">
-                            + Sell an Item
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(item => `
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700/80 shadow-xs hover:shadow-md hover:border-brand-500/50 transition-all flex flex-col justify-between space-y-3">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-2">
-                            <span class="px-2 py-0.5 rounded-md bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300 text-[10px] font-extrabold">Class ${item.grade} • ${item.category}</span>
-                            <span class="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md">${item.condition}</span>
-                        </div>
-                        <h3 class="font-bold text-sm text-slate-900 dark:text-white line-clamp-2">${item.title}</h3>
-                        <p class="text-xs text-slate-400 mt-1"><i class="fa-solid fa-location-dot text-slate-400 mr-1"></i>${item.location}</p>
-                    </div>
-                    <div class="pt-3 border-t border-slate-100 dark:border-slate-700/50">
-                        <div class="flex items-baseline justify-between mb-3">
-                            <div>
-                                <span class="text-lg font-black text-brand-600 dark:text-brand-400">₹${item.price}</span>
-                                ${item.originalPrice ? `<span class="text-xs text-slate-400 line-through ml-1.5">₹${item.originalPrice}</span>` : ''}
-                            </div>
-                            <span class="text-[11px] text-slate-500 dark:text-slate-400">${item.seller}</span>
-                        </div>
-                        <button onclick="openItemDetails(${item.id})" class="w-full py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-brand-600 hover:text-white dark:hover:bg-brand-600 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all">
-                            View & Contact
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render Notes
-        function renderNotes() {
-            const grid = document.getElementById('notesGrid');
-            if (!grid) return;
-            const filtered = notesItems.filter(note => currentGrade === 'all' || note.grade === String(currentGrade));
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-                        <i class="fa-solid fa-file-pdf text-4xl text-slate-300 dark:text-slate-600 mb-3"></i>
-                        <p class="font-bold text-slate-600 dark:text-slate-300">No notes found for Class ${currentGrade === 'all' ? 'All Classes' : currentGrade}.</p>
-                        <p class="text-xs text-slate-400 mt-1">Upload your own notes or study materials to help classmates!</p>
-                        <button onclick="checkAuthAndAction(() => openModal('addNoteModal'), 'upload e-notes')" class="mt-4 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-bold text-xs shadow-md transition-all">
-                            + Upload Note
-                        </button>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(note => `
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700/80 shadow-xs hover:border-brand-500/50 transition-all flex flex-col justify-between space-y-4">
-                    <div>
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 text-[10px] font-bold">Class ${note.grade} • ${note.subject}</span>
-                            <span class="text-[10px] text-slate-400"><i class="fa-solid fa-file-pdf text-red-500 mr-1"></i>${note.fileType}</span>
-                        </div>
-                        <h3 class="font-bold text-sm text-slate-900 dark:text-white">${note.title}</h3>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">${note.pages} • ${note.downloads} Student Downloads</p>
-                    </div>
-                    <div class="flex items-center gap-2 pt-2 border-t border-slate-100 dark:border-slate-700/50">
-                        <button onclick="viewPdfNote(${note.id})" class="px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all flex items-center gap-1.5">
-                            <i class="fa-solid fa-eye text-brand-500"></i> Read
-                        </button>
-                        <button onclick="downloadNote(${note.id})" class="flex-1 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold transition-colors flex items-center justify-center gap-1.5">
-                            <i class="fa-solid fa-download"></i> Download
-                        </button>
-                        <button onclick="switchTab('ai')" title="Open in StudyCoachAi" class="px-3 py-2 rounded-xl bg-amber-500/10 text-amber-600 dark:text-amber-400 hover:bg-amber-500 hover:text-white text-xs font-bold transition-all">
-                            <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Render Hackathons
-        function renderHackathons() {
-            const grid = document.getElementById('hackathonsGrid');
-            if (!grid) return;
-            
-            const cityHeader = document.getElementById('hackathonCityHeader');
-            if (cityHeader) cityHeader.innerText = `📍 City: ${currentCity}`;
-            
-            const filtered = hackathonsData.filter(h => h.city === currentCity);
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `
-                    <div class="col-span-full text-center py-10 bg-white dark:bg-slate-800 rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
-                        <p class="font-bold text-slate-600 dark:text-slate-300">No upcoming competitions listed for ${currentCity} right now.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            grid.innerHTML = filtered.map(h => `
-                <div class="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-xs space-y-3">
-                    <div class="flex items-center justify-between">
-                        <span class="px-2.5 py-0.5 rounded-full bg-accent-purple/10 text-accent-purple text-[10px] font-extrabold">${h.tag}</span>
-                        <span class="text-xs font-bold text-emerald-600 dark:text-emerald-400">${h.prize}</span>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 dark:text-white">${h.title}</h3>
-                    <div class="space-y-1 text-xs text-slate-500 dark:text-slate-400">
-                        <p><i class="fa-solid fa-calendar text-brand-500 mr-1.5"></i>${h.date}</p>
-                        <p><i class="fa-solid fa-location-dot text-rose-500 mr-1.5"></i>${h.venue}</p>
-                    </div>
-                    <button onclick="alert('Registration details for ${h.title} sent!')" class="w-full py-2.5 rounded-xl bg-slate-900 dark:bg-slate-700 text-white text-xs font-bold hover:bg-brand-600 transition-colors">
-                        View Details & Register
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        // Tab Switcher
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
-                btn.classList.add('text-slate-600', 'dark:text-slate-400');
-            });
-
-            const targetSection = document.getElementById(`section-${tabId}`);
-            if (targetSection) {
-                targetSection.classList.remove('hidden');
-            }
-
-            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.add('active', 'bg-brand-50', 'dark:bg-brand-900/40', 'text-brand-600', 'dark:text-brand-300');
-            }
-            
-            if (tabId === 'flea') renderFleaMarket();
-            if (tabId === 'notes') renderNotes();
-            if (tabId === 'hackathons') renderHackathons();
-        }
-
-        // Global Handlers
-        function handleCityChange(city) {
-            currentCity = city;
-            renderFleaMarket();
-            renderHackathons();
-        }
-
-        function handleGradeChange(grade) {
-            currentGrade = grade;
-            renderFleaMarket();
-            renderNotes();
-        }
-
-        function filterFleaCategory(cat) {
-            currentCategory = cat;
-            document.querySelectorAll('.flea-cat-btn').forEach(btn => {
-                btn.classList.remove('bg-brand-600', 'text-white');
-                btn.classList.add('bg-slate-100', 'dark:bg-slate-700', 'text-slate-600', 'dark:text-slate-300');
-            });
-            if (event && event.target) {
-                event.target.classList.add('bg-brand-600', 'text-white');
-            }
-            renderFleaMarket();
-        }
-
-        function filterFleaItems() {
-            const query = document.getElementById('fleaSearch').value.toLowerCase();
-            const cards = document.querySelectorAll('#fleaMarketGrid > div');
-            cards.forEach(card => {
-                const text = card.innerText.toLowerCase();
-                card.style.display = text.includes(query) ? 'flex' : 'none';
-            });
-        }
-
-        function openItemDetails(id) {
-            const item = fleaItems.find(i => i.id === id);
-            if (!item) return;
-            const modalContent = document.getElementById('itemModalContent');
-            modalContent.innerHTML = `
-                <div class="space-y-4">
-                    <span class="px-2 py-0.5 rounded bg-brand-100 text-brand-700 text-[10px] font-bold">Class ${item.grade} • ${item.category}</span>
-                    <h3 class="text-xl font-extrabold text-slate-900 dark:text-white">${item.title}</h3>
-                    <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-3 rounded-xl">
-                        <div>
-                            <p class="text-xs text-slate-400">Asking Price</p>
-                            <p class="text-xl font-black text-brand-600">₹${item.price}</p>
-                        </div>
-                        <div class="text-right">
-                            <p class="text-xs text-slate-400">Condition</p>
-                            <p class="text-xs font-bold text-emerald-600">${item.condition}</p>
-                        </div>
-                    </div>
-                    <div class="text-xs space-y-1 text-slate-600 dark:text-slate-300">
-                        <p><strong>Seller:</strong> ${item.seller}</p>
-                        <p><strong>Location:</strong> ${item.location} (${item.city})</p>
-                    </div>
-                    <div class="pt-2">
-                        <button onclick="checkAuthAndAction(() => contactSeller('${item.seller}'), 'contact seller')" class="w-full py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-xs shadow-md">
-                            <i class="fa-brands fa-whatsapp mr-2"></i>Contact Seller on WhatsApp
-                        </button>
-                    </div>
-                </div>
-            `;
-            openModal('itemModal');
-        }
-
-        function contactSeller(sellerName) {
-            closeModal('itemModal');
-            alert(`Connect request sent! Seller (${sellerName}) contact details have been unlocked.`);
-        }
-
-        function viewPdfNote(id) {
-            const note = notesItems.find(n => n.id === id);
-            if (!note) return;
-            const pdfUrl = note.pdfUrl || createSamplePdfDataUrl(note.title);
-            document.getElementById('pdfViewerTitle').innerText = note.title;
-            document.getElementById('pdfFrame').src = pdfUrl;
-            openModal('pdfViewerModal');
-        }
-
-        function downloadNote(id) {
-            const note = notesItems.find(n => n.id === id);
-            if (!note) return;
-            
-            checkAuthAndAction(() => {
-                note.downloads += 1;
-                renderNotes();
-
-                const pdfUrl = note.pdfUrl || createSamplePdfDataUrl(note.title);
-                const link = document.createElement('a');
-                link.href = pdfUrl;
-                link.download = `${note.title.replace(/[^a-zA-Z0-9]/g, '_')}.pdf`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                const toast = document.createElement('div');
-                toast.className = 'fixed bottom-4 right-4 bg-slate-900 text-white px-4 py-3 rounded-xl text-xs font-bold shadow-2xl z-50 flex items-center gap-2';
-                toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i> Download started for "${note.title}"`;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
-            }, `download "${note.title}"`);
-        }
-
-        function createSamplePdfDataUrl(title) {
-            const samplePdf = `%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Count 1/Kids[3 0 R]>>endobj\n3 0 obj<</Type/Page/MediaBox[0 0 612 792]/Parent 2 0 R/Resources<</Font<</F1 4 0 R>>>>/Contents 5 0 R>>endobj\n4 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj\n5 0 obj<</Length 90>>stream\nBT\n/F1 18 Tf\n50 700 Td\n(${title.replace(/[()]/g, '')}) Tj\nET\nendstream\nendobj\nxref\n0 6\n0000000000 65535 f\n0000000009 00000 n\n0000000056 00000 n\n00000000111 00000 n\n0000000212 00000 n\n0000000281 00000 n\ntrailer<</Size 6/Root 1 0 R>>\nstartxref\n422\n%%EOF`;
-            return 'data:application/pdf;base64,' + btoa(samplePdf);
-        }
-
-        // Auth Gate logic
-        function checkAuthAndAction(actionCallback, actionName = 'access this feature') {
-            if (currentUser) {
-                actionCallback();
-            } else {
-                pendingAction = actionCallback;
-                document.getElementById('authReasonText').innerText = `Please sign up or log in to ${actionName}.`;
-                openAuthModal('signup');
-            }
-        }
-
-        function openAuthModal(mode = 'login') {
-            switchAuthTab(mode);
-            openModal('authModal');
-        }
-
-        function switchAuthTab(mode) {
-            currentAuthMode = mode;
-            const signupFields = document.getElementById('signupFields');
-            const submitBtn = document.getElementById('authSubmitBtn');
-            const tabLogin = document.getElementById('authTabLogin');
-            const tabSignup = document.getElementById('authTabSignup');
-
-            if (mode === 'signup') {
-                signupFields.classList.remove('hidden');
-                submitBtn.innerText = 'Create Free Account & Continue';
-                tabSignup.className = 'flex-1 py-2 text-center border-b-2 border-brand-600 text-brand-600';
-                tabLogin.className = 'flex-1 py-2 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-600';
-            } else {
-                signupFields.classList.add('hidden');
-                submitBtn.innerText = 'Log In to Continue';
-                tabLogin.className = 'flex-1 py-2 text-center border-b-2 border-brand-600 text-brand-600';
-                tabSignup.className = 'flex-1 py-2 text-center text-slate-400 border-b-2 border-transparent hover:text-slate-600';
-            }
-        }
-
-        function handleAuthSubmit(e) {
-            e.preventDefault();
-            const identifier = document.getElementById('authIdentifier').value;
-            const name = document.getElementById('authName').value || identifier.split('@')[0];
-
-            // Mock login success
-            currentUser = {
-                name: name,
-                identifier: identifier
-            };
-
-            // Update Header UI
-            document.getElementById('navAuthContainer').innerHTML = `
-                <div class="flex items-center gap-2 bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs">
-                    <div class="w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center font-bold text-[10px]">
-                        ${name.charAt(0).toUpperCase()}
-                    </div>
-                    <span class="font-bold text-slate-700 dark:text-slate-200 hidden sm:inline">${name}</span>
-                    <button onclick="handleLogout()" title="Log Out" class="text-slate-400 hover:text-rose-500 ml-1">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                    </button>
-                </div>
-            `;
-
-            closeModal('authModal');
-
-            // Trigger action that was pending
-            if (pendingAction) {
-                const actionToRun = pendingAction;
-                pendingAction = null;
-                setTimeout(() => actionToRun(), 300);
-            }
-        }
-
-        function handleLogout() {
-            currentUser = null;
-            document.getElementById('navAuthContainer').innerHTML = `
-                <button onclick="openAuthModal('login')" class="px-3.5 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold text-xs transition-all flex items-center gap-2">
-                    <i class="fa-solid fa-user-plus"></i>
-                    <span>Log In / Sign Up</span>
-                </button>
-            `;
-            alert('Logged out successfully.');
-        }
-
-        function handleNewListing(e) {
-            e.preventDefault();
-            const title = document.getElementById('newTitle').value;
-            const grade = document.getElementById('newGrade').value;
-            const price = document.getElementById('newPrice').value;
-            const city = document.getElementById('newCity').value;
-            const condition = document.getElementById('newCondition').value || 'Good Condition';
-
-            const newItem = {
-                id: Date.now(),
-                title: title,
-                grade: grade,
-                price: price,
-                originalPrice: Math.round(Number(price) * 1.4),
-                city: city,
-                condition: condition,
-                seller: currentUser ? currentUser.name : 'Student Seller',
-                category: 'Books',
-                location: city
-            };
-
-            fleaItems.unshift(newItem);
-            renderFleaMarket();
-            closeModal('addListingModal');
-            alert('Listing published successfully to Flea Market!');
-        }
-
-        // New E-Note Upload Handler
-        function handleNewNote(e) {
-            e.preventDefault();
-            const title = document.getElementById('noteTitle').value;
-            const subject = document.getElementById('noteSubject').value;
-            const grade = document.getElementById('noteGrade').value;
-            const pages = document.getElementById('notePages').value || '10 Pages';
-            const fileInput = document.getElementById('noteFileInput');
-
-            const saveNote = (pdfUrl) => {
-                const newNote = {
-                    id: Date.now(),
-                    title: title,
-                    grade: grade,
-                    subject: subject,
-                    fileType: 'PDF',
-                    pages: pages,
-                    downloads: 1,
-                    pdfUrl: pdfUrl || createSamplePdfDataUrl(title)
-                };
-
-                notesItems.unshift(newNote);
-                renderNotes();
-                closeModal('addNoteModal');
-                
-                // Show toast notification
-                const toast = document.createElement('div');
-                toast.className = 'fixed bottom-4 right-4 bg-emerald-600 text-white px-4 py-3 rounded-xl text-xs font-bold shadow-2xl z-50 flex items-center gap-2';
-                toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> E-Note published successfully!`;
-                document.body.appendChild(toast);
-                setTimeout(() => toast.remove(), 3000);
-            };
-
-            // Read attached file as Data URL (Base64)
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    saveNote(evt.target.result);
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            } else {
-                saveNote(null);
-            }
-        }
-
-        // Initialize Theme & Render Data
-        if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderFleaMarket();
-            renderNotes();
-            renderHackathons();
-        });
-    </script>
+      // Simulate AI Answer
+      setTimeout(() => {
+        const aiMsg = document.createElement('div');
+        aiMsg.className = "bg-slate-900 p-3 rounded-lg border border-slate-800 text-xs text-slate-300";
+        aiMsg.innerHTML = `<span class="font-semibold text-indigo-400 block mb-1"><i class="fa-solid fa-robot mr-1"></i> StudyCoach AI:</span> I evaluated your study board with ${items.length} current items. Recommend focusing first on High Priority items like "${items.find(i => i.priority === 'High')?.title || 'your pending tasks'}".`;
+        chat.appendChild(aiMsg);
+        chat.scrollTop = chat.scrollHeight;
+      }, 600);
+    }
+  </script>
 </body>
 </html>
