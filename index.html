@@ -563,18 +563,6 @@
 
         const notesItems = [
             {
-                id: 100,
-                title: "Class 10 Mathematics - Complete Board Formula Sheet (By Kriti Sharma)",
-                grade: "10",
-                subject: "Mathematics",
-                fileType: "PDF",
-                pages: "9 Pages",
-                downloads: 542,
-                isFeatured: true,
-                author: "Kriti Sharma (Creative Learning Jr.)",
-                pdfUrl: null
-            },
-            {
                 id: 101,
                 title: "Class 10 Physics - Ray Diagrams, Light & Human Eye Quick Revision",
                 grade: "10",
@@ -950,145 +938,9 @@
         function viewPdfNote(id) {
             const note = notesItems.find(n => n.id === id);
             if (!note) return;
-            
+            const pdfUrl = note.pdfUrl || createSamplePdfDataUrl(note.title);
             document.getElementById('pdfViewerTitle').innerText = note.title;
-            const pdfFrame = document.getElementById('pdfFrame');
-
-            if (note.id === 100) {
-                // Interactive rich render for Kriti Sharma's Class 10 Formula Sheet
-                const formulaHtml = `
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
-                    <script src="https://cdn.tailwindcss.com"></script>
-                    <style>
-                        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; padding: 20px; }
-                        .card { background: #1e293b; border: 1px solid #334155; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
-                        .badge { background: #6366f1; color: white; font-size: 11px; font-weight: bold; padding: 2px 8px; border-radius: 9999px; }
-                        table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12px; }
-                        th, td { border: 1px solid #475569; padding: 6px 10px; text-align: center; }
-                        th { background: #334155; color: #38bdf8; }
-                        .formula-box { background: #0f172a; border-left: 4px solid #6366f1; padding: 8px 12px; margin: 6px 0; border-radius: 4px; font-family: monospace; }
-                    </style>
-                </head>
-                <body>
-                    <div class="text-center mb-6 border-b border-slate-700 pb-4">
-                        <span class="badge">Creative Learning Jr.</span>
-                        <h1 class="text-2xl font-bold text-indigo-400 mt-2">Class 10 Maths - Formula Sheet</h1>
-                        <p class="text-xs text-slate-400">Prepared by Kriti Sharma • Complete Board Revision (Pages 1–9)</p>
-                    </div>
-
-                    <!-- UNIT 1: Real Numbers & Polynomials -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Unit 1 & 2: Real Numbers & Polynomials</h2>
-                        <p class="text-xs text-slate-300"><b>Real Numbers:</b></p>
-                        <div class="formula-box text-xs">HCF(a, b) × LCM(a, b) = a × b</div>
-                        
-                        <p class="text-xs text-slate-300 mt-3"><b>Quadratic Polynomials p(x) = ax² + bx + c (a ≠ 0):</b></p>
-                        <div class="formula-box text-xs">Sum of zeroes (α + β) = -b / a</div>
-                        <div class="formula-box text-xs">Product of zeroes (αβ) = c / a</div>
-
-                        <p class="text-xs text-slate-300 mt-3"><b>Algebraic Identities:</b></p>
-                        <ul class="list-disc list-inside text-xs space-y-1 text-slate-300">
-                            <li>(a + b)² = a² + b² + 2ab</li>
-                            <li>(a - b)² = a² + b² - 2ab</li>
-                            <li>a² - b² = (a + b)(a - b)</li>
-                            <li>(a + b + c)² = a² + b² + c² + 2(ab + bc + ca)</li>
-                            <li>a³ + b³ + c³ - 3abc = (a + b + c)(a² + b² + c² - ab - bc - ca)</li>
-                            <li>If a + b + c = 0, then a³ + b³ + c³ = 3abc</li>
-                        </ul>
-                    </div>
-
-                    <!-- Linear & Quadratic Equations -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Linear Equations & Quadratic Equations</h2>
-                        <p class="text-xs text-slate-300"><b>Pair of Linear Equations Conditions:</b></p>
-                        <ul class="list-disc list-inside text-xs space-y-1 text-slate-300">
-                            <li>a₁/a₂ ≠ b₁/b₂ ➔ Intersecting lines, Consistent (1 Solution)</li>
-                            <li>a₁/a₂ = b₁/b₂ ≠ c₁/c₂ ➔ Parallel lines, Inconsistent (0 Solutions)</li>
-                            <li>a₁/a₂ = b₁/b₂ = c₁/c₂ ➔ Coincident lines, Consistent (Infinitely Many Solutions)</li>
-                        </ul>
-
-                        <p class="text-xs text-slate-300 mt-3"><b>Quadratic Formula (ax² + bx + c = 0):</b></p>
-                        <div class="formula-box text-xs">x = [-b ± √(b² - 4ac)] / (2a)</div>
-                        <div class="formula-box text-xs">Discriminant (D) = b² - 4ac<br>
-                        • D > 0 ➔ Two distinct real roots<br>
-                        • D = 0 ➔ Two equal real roots<br>
-                        • D < 0 ➔ No real roots</div>
-                    </div>
-
-                    <!-- Arithmetic Progression & Coordinate Geometry -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Arithmetic Progression & Coordinate Geometry</h2>
-                        <p class="text-xs text-slate-300"><b>Arithmetic Progression (AP):</b></p>
-                        <div class="formula-box text-xs">General Term: aₙ = a + (n - 1)d</div>
-                        <div class="formula-box text-xs">Sum of n terms: Sₙ = (n / 2) [2a + (n - 1)d]  OR  Sₙ = (n / 2) [a + l]</div>
-                        <div class="formula-box text-xs">If a, b, c are in AP ➔ 2b = a + c</div>
-
-                        <p class="text-xs text-slate-300 mt-3"><b>Coordinate Geometry:</b></p>
-                        <div class="formula-box text-xs">Distance Formula = √[(x₂ - x₁)² + (y₂ - y₁)²]</div>
-                        <div class="formula-box text-xs">Section Formula = ( (m₁x₂ + m₂x₁)/(m₁+m₂), (m₁y₂ + m₂y₁)/(m₁+m₂) )</div>
-                        <div class="formula-box text-xs">Mid-point Formula = ( (x₁ + x₂)/2, (y₁ + y₂)/2 )</div>
-                    </div>
-
-                    <!-- Trigonometry & Identities -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Trigonometry Values & Identities</h2>
-                        <table>
-                            <thead>
-                                <tr><th>Angle (θ)</th><th>0°</th><th>30°</th><th>45°</th><th>60°</th><th>90°</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>sin θ</td><td>0</td><td>1/2</td><td>1/√2</td><td>√3/2</td><td>1</td></tr>
-                                <tr><td>cos θ</td><td>1</td><td>√3/2</td><td>1/√2</td><td>1/2</td><td>0</td></tr>
-                                <tr><td>tan θ</td><td>0</td><td>1/√3</td><td>1</td><td>√3</td><td>Not Defined</td></tr>
-                                <tr><td>cosec θ</td><td>Not Defined</td><td>2</td><td>√2</td><td>2/√3</td><td>1</td></tr>
-                                <tr><td>sec θ</td><td>1</td><td>2/√3</td><td>√2</td><td>2</td><td>Not Defined</td></tr>
-                                <tr><td>cot θ</td><td>Not Defined</td><td>√3</td><td>1</td><td>1/√3</td><td>0</td></tr>
-                            </tbody>
-                        </table>
-                        <p class="text-xs text-slate-300 mt-3"><b>Key Identities:</b></p>
-                        <div class="formula-box text-xs">sin²θ + cos²θ = 1</div>
-                        <div class="formula-box text-xs">1 + tan²θ = sec²θ</div>
-                        <div class="formula-box text-xs">1 + cot²θ = cosec²θ</div>
-                    </div>
-
-                    <!-- Surface Areas & Volume -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Surface Area and Volume Formulas</h2>
-                        <table>
-                            <thead>
-                                <tr><th>Solid</th><th>Curved Surface Area</th><th>Total Surface Area</th><th>Volume</th></tr>
-                            </thead>
-                            <tbody>
-                                <tr><td>Cuboid</td><td>2h(l + b)</td><td>2(lb + bh + hl)</td><td>l × b × h</td></tr>
-                                <tr><td>Cube</td><td>4a²</td><td>6a²</td><td>a³</td></tr>
-                                <tr><td>Cylinder</td><td>2πrh</td><td>2πr(r + h)</td><td>πr²h</td></tr>
-                                <tr><td>Cone</td><td>πrl (l = √(r²+h²))</td><td>πr(r + l)</td><td>(1/3)πr²h</td></tr>
-                                <tr><td>Sphere</td><td>4πr²</td><td>4πr²</td><td>(4/3)πr³</td></tr>
-                                <tr><td>Hemisphere</td><td>2πr²</td><td>3πr²</td><td>(2/3)πr³</td></tr>
-                                <tr><td>Frustum</td><td>πl(R + r)</td><td>π[R² + r² + l(R + r)]</td><td>(1/3)πh(R² + r² + Rr)</td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Statistics & Probability -->
-                    <div class="card">
-                        <h2 class="text-base font-bold text-sky-400 border-b border-slate-700 pb-1 mb-2">Statistics & Probability</h2>
-                        <div class="formula-box text-xs">Empirical Relationship: 3 × Median = Mode + 2 × Mean</div>
-                        <div class="formula-box text-xs">Mode = l + [ (f₁ - f₀) / (2f₁ - f₀ - f₂) ] × h</div>
-                        <div class="formula-box text-xs">Median = l + [ (n/2 - cf) / f ] × h</div>
-                        <div class="formula-box text-xs">Probability: P(E) = (Favourable Outcomes) / (Total Outcomes)</div>
-                        <div class="formula-box text-xs">P(E) + P(Ē) = 1, where 0 ≤ P(E) ≤ 1</div>
-                    </div>
-                </body>
-                </html>`;
-                pdfFrame.src = 'data:text/html;charset=utf-8,' + encodeURIComponent(formulaHtml);
-            } else {
-                pdfFrame.src = note.pdfUrl || createSamplePdfDataUrl(note.title);
-            }
-            
+            document.getElementById('pdfFrame').src = pdfUrl;
             openModal('pdfViewerModal');
         }
 
